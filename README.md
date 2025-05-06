@@ -1,78 +1,103 @@
-# Monday.com Uploader App
+# Monday.com Data Uploader
 
-A desktop application for uploading and editing items on Monday.com boards using a spreadsheet-like interface. Built with Python, Tkinter, pandas, and tksheet.
+A Python-based GUI application for uploading and managing data in Monday.com boards. This application provides a user-friendly interface for uploading data from Excel/CSV files and manually editing data through a spreadsheet editor.
 
 ## Features
-- **Connect to Monday.com**: Enter your API key and select a board.
-- **Spreadsheet Editor**: Edit board items in a familiar spreadsheet UI (powered by tksheet).
-- **Bulk Upload**: Import data from Excel/CSV and upload as new items.
-- **Edit Existing Items**: Load items from a board, edit them, and save changes back to Monday.com.
-- **Column Type Handling**: Supports text, number, status, date, email, phone, board-relation, and more.
-- **Save/Load Spreadsheet**: Save your work locally as Excel for backup or offline editing.
 
-## Installation
+- Upload data from Excel (.xlsx, .xls) and CSV files
+- Built-in spreadsheet editor for manual data entry
+- Support for various Monday.com column types:
+  - Text
+  - Numbers
+  - Email
+  - Status
+  - People (with dropdown selection)
+  - Date
+  - Phone
+  - Long text
+  - Board relations
 
-1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd monday_uploader
+## Recent Updates
+
+### Email Handling Improvements
+- Fixed email validation and formatting
+- Proper JSON structure for email columns
+- Improved error handling for invalid email formats
+
+### Status Column Enhancements
+- Added dropdown menu for status selection
+- Dynamic loading of status options from board settings
+- Support for both label and index-based status values
+- Proper handling of board-specific status labels
+
+### User Interface Improvements
+- Spreadsheet editor window matches main window size
+- Added dropdown menus for person and status columns
+- Better error messages and validation feedback
+
+## Requirements
+
+- Python 3.x
+- Required packages (install via pip):
+  ```
+  pip install -r requirements.txt
+  ```
+
+## Setup
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/fabiemdf/Monday-Uploader.git
    ```
 
-2. **Create a virtual environment (optional but recommended)**
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate
+2. Install dependencies:
    ```
-
-3. **Install dependencies**
-   ```bash
    pip install -r requirements.txt
    ```
-   If `requirements.txt` is missing, install manually:
-   ```bash
-   pip install pandas requests tksheet openpyxl
+
+3. Run the application:
+   ```
+   python main.py
    ```
 
 ## Usage
 
-1. **Run the app**
-   ```bash
-   python main.py
-   ```
+1. Enter your Monday.com API key
+2. Click "Load Boards" to fetch available boards
+3. Select a board from the dropdown
+4. Choose one of the following options:
+   - Select an Excel/CSV file to upload
+   - Open the spreadsheet editor for manual data entry
 
-2. **Connect to Monday.com**
-   - Enter your Monday.com API key.
-   - Click "Load Boards" and select a board.
+### Using the Spreadsheet Editor
 
-3. **Upload Data**
-   - Click "Select Excel/CSV File" to import data and upload as new items.
+- Double-click on cells to edit
+- Double-click on person columns to select users from a dropdown
+- Double-click on status columns to select from available status options
+- Use the buttons at the bottom to:
+  - Load existing items
+  - Save to Excel
+  - Upload to Monday.com
 
-4. **Edit Board Items**
-   - Click "Open Spreadsheet Editor".
-   - Use "Load Items" to fetch current board items into the spreadsheet.
-   - Edit values directly in the grid.
-   - Click "Upload to Monday.com" to save changes (existing items are updated, new rows are created).
-   - Use "Save to Excel" to export your current sheet for backup.
+## API Rate Limits
 
-## Development Notes
+The application is subject to Monday.com's API rate limits. If you encounter a "Daily limit exceeded" error, you'll need to:
+1. Wait until the next day for the limit to reset, or
+2. Upgrade your Monday.com plan for higher limits
 
-- **Tech Stack**: Python, Tkinter (GUI), pandas (data handling), requests (API), tksheet (spreadsheet UI).
-- **API Integration**: Uses Monday.com GraphQL API for all board/item operations.
-- **Column Mapping**: Dynamically fetches board columns and maps spreadsheet columns to Monday.com column IDs/types.
-- **Editing**: When loading items, their IDs are tracked. On upload, existing items are updated via `change_multiple_column_values`, and new rows are created with `create_item`.
-- **Special Columns**: Handles special types (status, date, email, phone, board-relation, etc.) with correct JSON formatting for Monday.com API.
-- **Error Handling**: API and data errors are shown in popups and printed to the console for debugging.
+## Error Handling
 
-## Troubleshooting
-
-- **API Errors**: Ensure your API key is valid and has access to the selected board.
-- **Column Mismatches**: The spreadsheet columns must match the board's columns by title for correct mapping.
-- **Dependencies**: If you see import errors, ensure all dependencies are installed (see Installation).
-- **GraphQL Errors**: If you see GraphQL validation errors, check for API changes or column type mismatches.
-- **Large Boards**: For boards with many items/columns, loading and uploading may take longer.
+The application includes error handling for:
+- Invalid API keys
+- Network issues
+- Invalid data formats
+- API rate limits
+- Column type validation
 
 ## Contributing
-Pull requests and suggestions are welcome! Please open an issue for bugs or feature requests.
+
+Feel free to submit issues, fork the repository, and create pull requests for any improvements.
 
 ## License
-MIT License 
+
+This project is licensed under the MIT License - see the LICENSE file for details. 
